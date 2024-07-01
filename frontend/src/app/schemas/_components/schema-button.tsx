@@ -51,6 +51,7 @@ export default function SchemaButton({ schema }: Props) {
       });
     } finally {
       setIsCreating(false);
+      modals.closeAll();
     }
   }
 
