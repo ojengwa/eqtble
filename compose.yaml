@@ -1,0 +1,4 @@
+include:
+  - ./frontend/compose.yaml
+  - ./backend/docker-compose.docs.yml
+  - ./backend/docker-compose.local.yml
