@@ -17,7 +17,6 @@ class FileValidator(object):
         content = file.read()
         try:
             yaml_content = yaml.safe_load(content)
-            print("yaml_content", yaml_content)
             Schema(**yaml_content)
         except yaml.YAMLError as e:
             raise ValidationError(f"Invalid YAML content: {str(e)}")

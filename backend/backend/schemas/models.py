@@ -27,7 +27,7 @@ class Schema(models.Model):
 
     def delete(self, full=False, *args, **kwargs):
         if full:
-            super(models.Model, self).delete(args, kwargs)
+            super(Schema, self).delete(args, kwargs)
         else:
             self.deleted = True
             self.deleted_at = datetime.now()
@@ -65,7 +65,7 @@ class Schema(models.Model):
     def revert_to(self, date: date):
         revert_to_obj = (
             self.get_logs()
-            .objects.filter(**{"created_at__lte": date})
+            .filter(**{"created_at__lte": date})
             .order("-created_at")[0]
         )
 
@@ -96,4 +96,4 @@ class Schema(models.Model):
             self.marker = uuid.uuid4().hex
 
         self.validate_unique()
-        super(self).save(*args, **kwargs)
+        super(Schema, self).save(*args, **kwargs)

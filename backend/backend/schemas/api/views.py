@@ -36,6 +36,33 @@ class SchemaViewSet(viewsets.ModelViewSet):
             return Schema.revision_manager.get_schemas()
         return queryset
 
+    def perform_update(self, serializer):
+        # Get the marker from the serializer's validated data
+        marker = serializer.validated_data.get("marker")
+        file = serializer.validated_data.get("file")
+        name = serializer.validated_data.get("name")
+        description = serializer.validated_data.get("description")
+        # Check for existing models with the same marker
+        existing_instance = (
+            Schema.objects.filter(marker=marker)
+            .exclude(pk=serializer.instance.pk)
+            .first()
+        )
+
+        if existing_instance:
+            # Create a new model instance if an existing one with the same marker is found
+            new_data = existing_instance.copy()
+            new_data.file = file if file else existing_instance.file
+            new_data.name = name if name else existing_instance.name
+            new_data.description = (
+                description if description else existing_instance.description
+            )
+
+            new_data.save()
+        else:
+            # Proceed with the update if no existing model with the same marker is found
+            serializer.save()
+
     def list(self, request):
         files = self.get_queryset()
         serializer = SchemaSerializer(files, many=True)

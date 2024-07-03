@@ -29,8 +29,8 @@ class View(BaseModel):
 class Dataset(BaseModel):
     name: str
     dimensions: List[Dimension]
-    measures: List[Measure]
-    views: List[View]
+    measures: Optional[List[Measure]] = None
+    views: Optional[List[View]] = None
 
     @field_validator("dimensions", "measures")
     def check_unique_names(cls, v, field):
