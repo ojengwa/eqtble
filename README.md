@@ -19,6 +19,7 @@ project-root/
 │   ├── Dockerfile
 │   ├── next.config.js
 │   ├── src/
+│   ├── public/
 │   ├── package.json
 │   └── ...  # Other frontend files and directories
 │
